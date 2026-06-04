@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Calculateur TCO & ROI - Polynt</title>
+
+<style>
+
+body{
+font-family:Arial,sans-serif;
+background:#f4f7fb;
+margin:0;
+padding:30px;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:15px;
+box-shadow:0 0 15px rgba(0,0,0,0.1);
+}
+
+h1{
+text-align:center;
+color:#005AA9;
+}
+
+.intro{
+text-align:center;
+color:#666;
+margin-bottom:30px;
+}
+
+h2{
+color:#005AA9;
+margin-top:25px;
+}
+
+label{
+display:block;
+margin-top:15px;
+font-weight:bold;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-top:5px;
+border:1px solid #ccc;
+border-radius:8px;
+box-sizing:border-box;
+}
+
+button{
+width:100%;
+margin-top:25px;
+padding:15px;
+background:#005AA9;
+color:white;
+border:none;
+border-radius:10px;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+background:#004688;
+}
+
+.box{
+background:#eef5ff;
+padding:20px;
+border-radius:10px;
+margin-top:20px;
+}
+
+.result-card{
+background:white;
+padding:15px;
+border-radius:8px;
+margin-top:10px;
+box-shadow:0 0 5px rgba(0,0,0,0.08);
+}
+
+.value{
+font-size:24px;
+font-weight:bold;
+color:#005AA9;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Calculateur TCO & ROI</h1>
+
+<p class="intro">
+Estimez le coût total de possession de votre solution actuelle et les économies potentielles réalisables grâce aux solutions Polynt.
+</p>
+
+<h2>Vos données</h2>
+
+<label>Quantité achetée par an (kg)</label>
+<input type="number" id="quantite" value="264000">
+
+<label>Prix moyen de la résine (€ / kg)</label>
+<input type="number" id="prix" value="2">
+
+<label>Coût de mise en place annuel (€)</label>
+<input type="number" id="miseplace" value="10000">
+
+<label>Coût d'usage annuel (€)</label>
+<input type="number" id="usage" value="25000">
+
+<label>Coût des non-conformités / risques (€)</label>
+<input type="number" id="risque" value="17000">
+
+<button onclick="calculer()">
+Calculer
+</button>
+
+<div class="box">
+
+<h2>Hypothèses Polynt</h2>
+
+<ul>
+<li>Réduction des coûts d'usage : -20 %</li>
+<li>Réduction des non-conformités et risques : -40 %</li>
+<li>Accompagnement technique renforcé</li>
+<li>Optimisation des performances industrielles</li>
+</ul>
+
+</div>
+
+<div class="box" id="resultat">
+
+<h2>Résultats</h2>
+
+<p>
+Renseignez vos données puis cliquez sur <strong>Calculer</strong>.
+</p>
+
+</div>
+
+</div>
+
+<script>
+
+function calculer(){
+
+let quantite = parseFloat(document.getElementById("quantite").value);
+let prix = parseFloat(document.getElementById("prix").value);
+let miseplace = parseFloat(document.getElementById("miseplace").value);
+let usage = parseFloat(document.getElementById("usage").value);
+let risque = parseFloat(document.getElementById("risque").value);
+
+let achat = quantite * prix;
+
+let tcoActuel =
+achat +
+miseplace +
+usage +
+risque;
+
+let tcoPolynt =
+achat +
+miseplace +
+(usage * 0.80) +
+(risque * 0.60);
+
+let economie =
+tcoActuel -
+tcoPolynt;
+
+let reduction =
+(economie / tcoActuel) * 100;
+
+let roi =
+(economie / tcoPolynt) * 100;
+
+document.getElementById("resultat").innerHTML = `
+
+<h2>Résultats</h2>
+
+<div class="result-card">
+TCO actuel
+<div class="value">${tcoActuel.toLocaleString('fr-FR')} €</div>
+</div>
+
+<div class="result-card">
+TCO estimé avec Polynt
+<div class="value">${tcoPolynt.toLocaleString('fr-FR')} €</div>
+</div>
+
+<div class="result-card">
+Économies potentielles
+<div class="value">${economie.toLocaleString('fr-FR')} €</div>
+</div>
+
+<div class="result-card">
+Réduction du coût total
+<div class="value">${reduction.toFixed(2)} %</div>
+</div>
+
+<div class="result-card">
+ROI estimé
+<div class="value">${roi.toFixed(2)} %</div>
+</div>
+
+`;
+
+}
+
+</script>
+
+</body>
+</html>
